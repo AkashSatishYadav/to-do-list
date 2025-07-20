@@ -1,0 +1,5 @@
+.dashboard {
+  display: flex;
+  flex-direction: row; /* vertical split */
+  height: 100vh; /* full viewport height */
+}

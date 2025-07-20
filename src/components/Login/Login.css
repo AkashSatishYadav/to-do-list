@@ -1,0 +1,41 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.login-box {
+  padding: 40px;
+  text-align: center;
+  background-color: white;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* subtle shadow */
+}
+
+button {
+  background-color: whitesmoke;
+  color: grey;
+  padding: 4px;
+  border-color: white;
+  font-size: 16px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* subtle shadow */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: whitesmoke; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight zoom */
+}
+
+h2 {
+  color: grey;
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* subtle shadow */
+  padding: 10px;
+  background-color: white;
+  border-radius: 4px;
+}
