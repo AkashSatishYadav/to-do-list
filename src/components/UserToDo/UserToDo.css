@@ -11,6 +11,7 @@
 }
 
 .note-card {
+  position: relative;
   background-color: white;
   padding: 15px;
   border-radius: 8px;
@@ -22,6 +23,26 @@
 
 .note-card:hover {
   transform: scale(1.03);
+}
+.cancel-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: transparent;
+  border: none;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  background-color: transparent;
+  box-shadow: none;
+  opacity: 0;
+  pointer-events: none; /* disable mouse events so it doesn't interfere */
+  transition: opacity 0.3s ease;
+}
+
+.note-card:hover .cancel-button {
+  opacity: 1; /* show on hover */
+  pointer-events: auto; /* enable mouse events */
 }
 h1 {
   display: flex;
@@ -82,4 +103,5 @@ button:disabled {
   cursor: not-allowed;
   opacity: 0.6;
   box-shadow: none;
+  transition: none;
 }

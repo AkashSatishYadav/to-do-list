@@ -7,6 +7,7 @@ function UserToDo() {
     { id: 2, title: "Meeting Notes", content: "Project kickoff at 10am" },
     { id: 3, title: "Ideas", content: "Build a to-do app like Keep" },
   ]);
+  const titleRef = React.useRef(null);
 
   const [editingNote, setEditingNote] = React.useState(null); // the selected note
   const [editTitle, setEditTitle] = React.useState("");
@@ -44,6 +45,14 @@ function UserToDo() {
     setEditingNote({});
     setIsNew(true);
   };
+
+  const handleDelete = () => {};
+  React.useEffect(() => {
+    if (isNew) {
+      titleRef.current.focus();
+    }
+  }, [isNew]);
+
   return (
     <div className="user-to-do">
       <h2>User Notes</h2>
@@ -54,6 +63,9 @@ function UserToDo() {
             key={note.id}
             onClick={() => openEditor(note)}
           >
+            <button className="cancel-button" onClick={handleDelete}>
+              X
+            </button>
             <h3>{note.title}</h3>
             <p>{note.content}</p>
           </div>
@@ -67,6 +79,7 @@ function UserToDo() {
         <div className="note-modal">
           <div className="note-modal-content">
             <input
+              ref={titleRef}
               type="text"
               value={editTitle}
               onChange={(e) => setEditTitle(e.target.value)}
