@@ -50,7 +50,7 @@ h1 {
   align-items: center;
 }
 /* Modal overlay */
-.note-modal {
+.modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -64,7 +64,8 @@ h1 {
 }
 
 /* Modal content */
-.note-modal-content {
+.modal-content {
+  position: relative;
   background-color: white;
   padding: 20px;
   width: 300px;
@@ -75,18 +76,18 @@ h1 {
   gap: 10px;
 }
 
-.note-modal-content input,
-.note-modal-content textarea {
+.modal-content input,
+.modal-content textarea {
   width: 100%;
   padding: -10px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.note-modal-content input {
+.modal-content input {
   min-height: 32px;
 }
-.note-modal-content textarea {
+.modal-content textarea {
   resize: vertical;
   min-height: 100px;
 }
@@ -104,4 +105,26 @@ button:disabled {
   opacity: 0.6;
   box-shadow: none;
   transition: none;
+}
+
+.modal-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 12px;
+  opacity: 1;
+  pointer-events: auto;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  box-shadow: none;
+  font-weight: bold;
+}
+
+.modal-delete {
+  background-color: red;
+}
+
+.modal-delete:hover {
+  background-color: red;
 }

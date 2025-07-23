@@ -13,6 +13,7 @@ function UserToDo() {
   const [editTitle, setEditTitle] = React.useState("");
   const [editContent, setEditContent] = React.useState("");
   const [isNew, setIsNew] = React.useState(false);
+  const [deletingNote, setDeletingNode] = React.useState(null);
 
   const openEditor = (note) => {
     setEditingNote(note);
@@ -46,7 +47,19 @@ function UserToDo() {
     setIsNew(true);
   };
 
-  const handleDelete = () => {};
+  const handleDelete = (event, note) => {
+    event.stopPropagation();
+    setDeletingNode(note);
+  };
+
+  const deleteNode = () => {
+    setNotes(notes.filter((note) => note.id !== deletingNote.id));
+    setDeletingNode(null);
+    closeEditor();
+  };
+  const closeModal = () => {
+    setDeletingNode(null);
+  };
   React.useEffect(() => {
     if (isNew) {
       titleRef.current.focus();
@@ -63,7 +76,10 @@ function UserToDo() {
             key={note.id}
             onClick={() => openEditor(note)}
           >
-            <button className="cancel-button" onClick={handleDelete}>
+            <button
+              className="cancel-button"
+              onClick={(event) => handleDelete(event, note)}
+            >
               X
             </button>
             <h3>{note.title}</h3>
@@ -76,8 +92,8 @@ function UserToDo() {
       </div>
 
       {editingNote && (
-        <div className="note-modal">
-          <div className="note-modal-content">
+        <div className="modal">
+          <div className="modal-content">
             <input
               ref={titleRef}
               type="text"
@@ -98,6 +114,34 @@ function UserToDo() {
                 Save
               </button>
               <button onClick={closeEditor}>Cancel</button>
+              {Object.keys(editingNote).length > 0 && (
+                <button
+                  className="modal-delete"
+                  onClick={(event) => handleDelete(event, editingNote)}
+                >
+                  Delete
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      {deletingNote && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Are you sure?</h2>
+            <button className="cancel-button modal-close" onClick={closeModal}>
+              X
+            </button>
+            <p>
+              Do you really want to delete this note? This operation cannot be
+              undone
+            </p>
+            <div className="modal-buttons">
+              <button onClick={closeModal}>Cancel</button>
+              <button className="modal-delete" onClick={deleteNode}>
+                Delete
+              </button>
             </div>
           </div>
         </div>
