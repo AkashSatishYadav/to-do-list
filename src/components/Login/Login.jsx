@@ -1,9 +1,10 @@
 import React from "react";
 import "./Login.css";
+import { login } from "../../services/AuthService";
 
-function Login({ setIsLogged }) {
+function Login() {
   function handleLogin() {
-    setIsLogged(true);
+    login();
   }
   return (
     <div className="login">

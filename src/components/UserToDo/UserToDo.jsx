@@ -30,7 +30,7 @@ function UserToDo() {
 
   const saveNote = () => {
     if (isNew) {
-      setNotes([...notes, { id: 4, title: editTitle, content: editContent }]);
+      setNotes([{ id: 4, title: editTitle, content: editContent }, ...notes]);
     } else {
       setNotes((prevNotes) =>
         prevNotes.map((n) =>
@@ -70,6 +70,9 @@ function UserToDo() {
     <div className="user-to-do">
       <h2>User Notes</h2>
       <div className="notes-grid">
+        <div className="note-card" onClick={addNote}>
+          <h1>+</h1>
+        </div>
         {notes.map((note) => (
           <div
             className="note-card"
@@ -86,9 +89,6 @@ function UserToDo() {
             <p>{note.content}</p>
           </div>
         ))}
-        <div className="note-card" onClick={addNote}>
-          <h1>+</h1>
-        </div>
       </div>
 
       {editingNote && (
@@ -128,7 +128,7 @@ function UserToDo() {
       )}
       {deletingNote && (
         <div className="modal">
-          <div className="modal-content">
+          <div className="delete-modal-content">
             <h2>Are you sure?</h2>
             <button className="cancel-button modal-close" onClick={closeModal}>
               X

@@ -68,7 +68,8 @@ h1 {
   position: relative;
   background-color: white;
   padding: 20px;
-  width: 300px;
+  width: 1000px;
+  height: 500px;
   border-radius: 8px;
   box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
   display: flex;
@@ -83,6 +84,9 @@ h1 {
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+.modal-content textarea {
+  height: 100%;
 }
 .modal-content input {
   min-height: 32px;
@@ -127,4 +131,16 @@ button:disabled {
 
 .modal-delete:hover {
   background-color: red;
+}
+
+.delete-modal-content {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  width: 300px;
+  border-radius: 8px;
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

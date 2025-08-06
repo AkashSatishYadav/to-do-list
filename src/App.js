@@ -4,23 +4,32 @@ import UserProfile from "./components/UserProfile";
 import UserToDo from "./components/UserToDo";
 import React from "react";
 import Login from "./components/Login";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Callback from "./components/Callback";
+import LogoutCallback from "./components/LogoutCallback";
 
 function App() {
-  const [isLogged, setIsLogged] = React.useState(false);
-
   return (
-    <>
-      {isLogged ? (
-        <div className="dashboard">
-          <UserProfile setIsLogged={setIsLogged}></UserProfile>
-          <UserToDo></UserToDo>
-        </div>
-      ) : (
-        <div>
-          <Login setIsLogged={setIsLogged}></Login>
-        </div>
-      )}
-    </>
+    <BrowserRouter>
+      <Routes>
+        {/* Login Page */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/callback" element={<Callback />} />
+        <Route path="/logout/callback" element={<LogoutCallback />} />
+        <Route
+          path="/dashboard"
+          element={
+            <div className="dashboard">
+              <UserProfile />
+              <UserToDo />
+            </div>
+          }
+        />
+
+        {/* Redirect unknown routes to login */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
