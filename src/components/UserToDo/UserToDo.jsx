@@ -7,6 +7,8 @@ function UserToDo() {
     { id: 2, title: "Meeting Notes", content: "Project kickoff at 10am" },
     { id: 3, title: "Ideas", content: "Build a to-do app like Keep" },
   ]);
+  const TITLE_LIMIT = 150;
+  const CONTENT_LIMIT = 10000;
   const titleRef = React.useRef(null);
 
   const [editingNote, setEditingNote] = React.useState(null); // the selected note
@@ -97,15 +99,33 @@ function UserToDo() {
             <input
               ref={titleRef}
               type="text"
+              maxLength={TITLE_LIMIT}
               value={editTitle}
               onChange={(e) => setEditTitle(e.target.value)}
               placeholder="Title"
             />
+            <p className="char-counter">
+              {editTitle.length}/{TITLE_LIMIT}
+              {editTitle.length === TITLE_LIMIT ? (
+                <span className="limit-reached"> – Limit reached</span>
+              ) : TITLE_LIMIT - editTitle.length <= 10 ? (
+                <span className="warning"> – Almost at limit</span>
+              ) : null}
+            </p>
             <textarea
+              maxLength={CONTENT_LIMIT}
               value={editContent}
               onChange={(e) => setEditContent(e.target.value)}
               placeholder="Take a note..."
             />
+            <p className="char-counter">
+              {editContent.length}/{CONTENT_LIMIT}
+              {editContent.length === CONTENT_LIMIT ? (
+                <span className="limit-reached"> – Limit reached</span>
+              ) : CONTENT_LIMIT - editContent.length <= 100 ? (
+                <span className="warning"> – Almost at limit</span>
+              ) : null}
+            </p>
             <div className="modal-buttons">
               <button
                 onClick={saveNote}
