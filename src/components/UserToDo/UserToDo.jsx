@@ -1,12 +1,14 @@
 import React from "react";
 import "./UserToDo.css";
+import {
+  fetchNotesFromService,
+  saveNoteToService,
+  deleteNoteAtService,
+} from "../../services/FetchService";
+import { v4 as uuidv4 } from "uuid";
 
 function UserToDo() {
-  const [notes, setNotes] = React.useState([
-    { id: 1, title: "Shopping List", content: "Eggs, Milk, Bread" },
-    { id: 2, title: "Meeting Notes", content: "Project kickoff at 10am" },
-    { id: 3, title: "Ideas", content: "Build a to-do app like Keep" },
-  ]);
+  const [notes, setNotes] = React.useState([]);
   const TITLE_LIMIT = 150;
   const CONTENT_LIMIT = 10000;
   const titleRef = React.useRef(null);
@@ -31,17 +33,16 @@ function UserToDo() {
   };
 
   const saveNote = () => {
+    let note = { title: editTitle, content: editContent };
     if (isNew) {
-      setNotes([{ id: 4, title: editTitle, content: editContent }, ...notes]);
+      note.noteID = uuidv4();
+      setNotes([note, ...notes]);
     } else {
-      setNotes((prevNotes) =>
-        prevNotes.map((n) =>
-          n.id === editingNote.id
-            ? { ...n, title: editTitle, content: editContent }
-            : n
-        )
-      );
+      note.noteID = editingNote.noteID;
+      let tempNotes = notes.filter((n) => n.noteID !== editingNote.noteID);
+      setNotes([note, ...tempNotes]);
     }
+    saveNoteToService(note, isNew);
     closeEditor();
   };
   const addNote = () => {
@@ -55,8 +56,9 @@ function UserToDo() {
   };
 
   const deleteNode = () => {
-    setNotes(notes.filter((note) => note.id !== deletingNote.id));
+    setNotes(notes.filter((note) => note.noteID !== deletingNote.noteID));
     setDeletingNode(null);
+    deleteNoteAtService(deletingNote.noteID);
     closeEditor();
   };
   const closeModal = () => {
@@ -68,6 +70,15 @@ function UserToDo() {
     }
   }, [isNew]);
 
+  React.useEffect(() => {
+    const fetchNotes = async () => {
+      const data = await fetchNotesFromService();
+      setNotes(data);
+    };
+
+    fetchNotes();
+  }, []);
+
   return (
     <div className="user-to-do">
       <h2>User Notes</h2>
@@ -78,7 +89,7 @@ function UserToDo() {
         {notes.map((note) => (
           <div
             className="note-card"
-            key={note.id}
+            key={note.noteID}
             onClick={() => openEditor(note)}
           >
             <button
