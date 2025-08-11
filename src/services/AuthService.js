@@ -6,8 +6,9 @@ const oidcConfig = {
   client_id: "react-spa-notes",
   redirect_uri: "http://localhost:3000/callback",
   response_type: "code",
-  scope: "openid profile email notesAPI",
+  scope: "openid profile email notesAPI offline_access",
   post_logout_redirect_uri: "http://localhost:3000/logout/callback",
+  automaticSilentRenew: true
 };
 
 const userManager = new UserManager(oidcConfig);
