@@ -1,45 +1,38 @@
-import { getAccessToken } from "./AuthService";
-import { getUser } from "./AuthService";
-
-const API_BASE = "https://localhost:7016/api/UserNotes";
+const API_BASE = "/api/UserNotes";
 
 export const saveNoteToService = async (note, isNew) => {
-  const token = await getAccessToken();
-  const user = await getUser();
-  note.userId = user.profile.sub;
   const method = isNew ? "POST" : "PUT";
 
   await fetch(API_BASE, {
     method,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "X-CSRF": "1",
     },
+	credentials: "include",
     body: JSON.stringify(note),
   });
 };
 
 export const deleteNoteAtService = async (deletingNoteId) => {
-  const token = await getAccessToken();
   await fetch(API_BASE, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "X-CSRF": "1",
     },
+	credentials: "include",
     body: JSON.stringify({ noteID: deletingNoteId }),
   });
 };
 
 export const fetchNotesFromService = async () => {
   try {
-    const token = await getAccessToken();
-    const user = await getUser();
-
-    const response = await fetch(`${API_BASE}/${user.profile.sub}`, {
+    const response = await fetch(`${API_BASE}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        "X-CSRF": "1",
       },
+	  credentials: "include",
     });
 
     if (!response.ok) {

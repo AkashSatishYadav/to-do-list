@@ -5,8 +5,6 @@ import UserToDo from "./components/UserToDo";
 import React from "react";
 import Login from "./components/Login";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Callback from "./components/Callback";
-import LogoutCallback from "./components/LogoutCallback";
 
 function App() {
   return (
@@ -14,8 +12,6 @@ function App() {
       <Routes>
         {/* Login Page */}
         <Route path="/login" element={<Login />} />
-        <Route path="/callback" element={<Callback />} />
-        <Route path="/logout/callback" element={<LogoutCallback />} />
         <Route
           path="/dashboard"
           element={

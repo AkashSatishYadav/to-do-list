@@ -1,25 +1,42 @@
 import React from "react";
 import "./UserProfile.css";
-import { getUser, logout } from "../../services/AuthService";
 
 function UserProfile() {
   const [profile, setProfile] = React.useState(null);
 
   React.useEffect(() => {
     async function loadUserProfile() {
-      const user = await getUser();
-      if (user && user.profile) {
-        console.log("User:", user);
-        console.log("User profile:", user.profile);
-        setProfile(user.profile);
+      const response = await fetch("/bff/user", {
+        headers: {
+          "X-CSRF": "1",
+        },
+		credentials: "include",
+      });
+      if (response.ok) {
+		const claimsArray = await response.json();
+        const claims = {};
+        claimsArray.forEach(claim => {
+          claims[claim.type] = claim.value;
+        });
+        setProfile(claims);
       }
     }
 
     loadUserProfile();
   }, []);
 
-  function handleLogout() {
-    logout();
+  async function handleLogout() {
+     await fetch("/bff/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF": "1",
+    },
+    credentials: "include",
+  });
+
+  // Optional: Redirect to login or home page after logout
+  window.location.href = "/login";
   }
   if (!profile) {
     return <div>Loading user profile...</div>;

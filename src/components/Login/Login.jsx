@@ -1,10 +1,9 @@
 import React from "react";
 import "./Login.css";
-import { login } from "../../services/AuthService";
 
 function Login() {
   function handleLogin() {
-    login();
+    window.location.href = "/bff/login?returnUrl=/dashboard";
   }
   return (
     <div className="login">
